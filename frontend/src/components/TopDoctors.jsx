@@ -1,14 +1,19 @@
-import React from 'react'
-import { doctors } from '../assets/assets_frontend/assets'
+import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../context/AppContext';
 
 function TopDoctors() {
+  const navigate=useNavigate()
+  const {doctors}=useContext(AppContext)
+
+
   return (
     <div className='flex flex-col flex-wrap items-center gap-4 my-16 md:mx-10'>
       <h1>Top Doctors to Book </h1>
       <p>Simply browse through our extension list of trusted doctors.</p>
       <div className='flex flex-wrap px-20'>
         {doctors.slice(0,10).map((item,index)=>(
-         <div className='flex flex-col rounded-xl border border-blue-200 m-1 w-40 cursor-pointer hover:translate-y-[-10px]  transition-all duration-300'>
+         <div onClick={()=>navigate(`/appointment/${item._id}`)} className='flex flex-col rounded-xl border border-blue-200 m-1 w-40 cursor-pointer hover:translate-y-[-10px]  transition-all duration-300'>
             <img className='gap-2 bg-blue-50 rounded-xl' src={item.image} alt="" />
             <div className=''>
                 <div className='flex items-center gap-2 p-2'>
@@ -20,7 +25,7 @@ function TopDoctors() {
          </div>
             ))}
       </div>
-      <button className='bg-blue-100  text-gray-600 px-8 py-3 mt-10 rounded-3xl font-medium cursor-pointer hover:scale-107 transition-all duration-300'>More</button>
+      <button onClick={()=>{navigate('/doctor'); scrollTo(0,0)}} className='bg-blue-100  text-gray-600 px-8 py-3 mt-10 rounded-3xl font-medium cursor-pointer hover:scale-107 transition-all duration-300'>More</button>
     </div>
   )
 }
